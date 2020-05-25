@@ -8,27 +8,31 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
 </head>
 <body>
-    <!-- 容器 -->
     <div id="app">
+        {{arr}}
         {{msg}}
-        {{msg.split('').reverse().join('')}}
     </div>
-    <!-- vue的js代码 -->
     <script>
         let vm = new Vue({
-            // 绑定模板
             el:'#app',
-            // 数据，定义在data中的数据可以在容器中访问
             data(){
                 return {
+                    arr:[1,2,3,4],
                     msg:'hello'
                 }
             }
         })
-        // vm为vue的实例对象
-        console.log(vm);
-        console.log(vm.msg);
 
+        setInterval(() => {
+            // 生成随机数
+            let random = Math.floor(Math.random()*10);
+            // 追加到msg后面
+            // vm.msg += random;
+            // console.log(vm.msg);
+            //vm.arr.push(random);
+            // vm.arr[vm.arr.length] = random;
+            // console.log(vm.arr);
+        }, 2000);
     </script>
 </body>
 </html>

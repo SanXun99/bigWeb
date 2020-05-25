@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script> -->
+</head>
+<body>
+    <div id="app">
+        <!-- 数组的遍历 -->
+        <!-- <ul v-for="(item,index) of list" v-bind:key="item.id">
+            <li>{{index}}----{{item.name}}</li>
+        </ul> -->
+        <!-- 对象的遍历 -->
+        <!-- <ul v-for="(value,key,index) in obj">
+            <li>{{key}}---{{value}}---{{index}}</li>
+        </ul> -->
+        <!-- 数字的遍历(整数) -->
+        <ul v-for="n in 5">
+            {{n}}
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+                    obj:{
+                        name:'zwj',
+                        age:21,
+                        gender:'male'
+                    },
+                    list:[{
+                        id:1,
+                        name:'zwj'
+                    },{
+                        id:2,
+                        name:'tom'
+                    },{
+                        id:3,
+                        name:'larry'
+                    }]
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,27 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dom操作</title>
-    <script>
-    </script>
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
 </head>
+
 <body>
-    <table>
-        <thead>
-            <td>
-                <th>编号</th>
-                <th>栏目名称</th>
-                <th>栏目描述</th>
-                <th>父栏目</th>
-            </td>
-        </thead>
-        <tbody>
-            <tr>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="app">
+        <table>
+            <thead>
+                <td>
+                    <th>编号</th>
+                    <th>栏目名称</th>
+                    <th>栏目描述</th>
+                    <th>父栏目</th>
+                </td>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key='item.id'>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.comment}}</td>
+                    <td>{{item.comment}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    list:[]
+                }
+            },
+            created(){
+                this.findAllCategory();
+            },
+            methods: {
+                findAllCategory() {
+                    // axios.get('http://39.96.21.48:8099/manager/category/findAllCategory')
+                    // .then((res)=>{
+                    //     this.list = res.data.data
+                    // })
+                    // $.get('http://39.96.21.48:8099/manager/category/findAllCategory',(res)=>{
+                    //     this.list = res.data
+                    // })
+                    $.ajax({
+                        url:'http://39.96.21.48:8099/manager/category/findAllCategory',
+                        method:'get',
+                        data:{},
+                        success:(res)=>{
+                            this.list = res.data
+                            console.log(this.list)
+                        }
+                    })
+                }
+            }
+        })
+        // findCategory()
+        // function findCategory(){
+        //     $.ajax({
+        //         url:'http://39.96.21.48:8099/manager/category/findAllCategory',
+        //         method:'get',
+        //         data:{},
+        //         success:function(res){
+        //             res.data.forEach((item)=>{
+        //                 var newTr = $(`
+        //                     <tr>
+        //                         <td><input type="text" value="`+item.id+`"></td>
+        //                         <td>`+item.name+`</td>
+        //                         <td>`+item.comment+`</td>
+        //                         <td>`+item.parent+`</td>
+        //                     </tr>
+        //                 `)
+        //                 $('tbody').append(newTr)
+        //             })
+        //         }
+        //     })
+        // }
+    </script>
 </body>
+
 </html>
