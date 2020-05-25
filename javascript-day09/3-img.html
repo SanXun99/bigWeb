@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片切换</title>
+	<script>
+		window.onload = function(){
+			// 获取按钮
+			var btn = document.getElementsByTagName('button')[0];
+			// 获取图片
+			var img = document.getElementsByTagName('img')[0];
+			// 给按钮绑定事件
+			btn.onclick = function(){
+				if(img.getAttribute('src') == './js2.jpg'){
+					img.src = './js3.jpg'
+				} else {
+					img.src = './js2.jpg'
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<img src="./js2.jpg" alt="">
+	<button>切换图片</button>
+</body>
+</html>

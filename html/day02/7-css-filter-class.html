@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>伪类过滤器</title>
+</head>
+<style>
+    .left_nav > ul > li:nth-child(3n+1){
+        background-color: pink;
+    }
+    ul > li:only-child {
+        background-color: khaki;
+    }
+</style>
+<body>
+    <div class="top_nav">
+        <ul>
+            <li>首页</li>
+            <li>校园新闻</li>
+            <li>招生就业</li>
+        </ul>
+    </div>
+
+    <div class="left_nav">
+        <ul>
+            <li id="xy">软件学院</li>
+            <li>艺术学院</li>
+            <li>机械学院</li>
+            <li>电气学院</li>
+        </ul>
+    </div>
+    <div class="right_nav">
+        <ul>
+            <li>校企合作</li>
+        </ul>
+    </div>
+</body>
+</html>

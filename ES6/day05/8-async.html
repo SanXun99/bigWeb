@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async</title>
+    <script>
+         // 基于promise的异步操作的封装
+         function getPromise(url) {
+            return new Promise((resolve,reject)=>{
+                // 1. 实例化xhr对象
+                var xhr = new XMLHttpRequest();
+                // 2. 打开请求
+                xhr.open('get',url);
+                // 3. 发送请求
+                xhr.send();
+                // 4. 设置响应对象为jason对象
+                xhr.responseType = 'json';
+                // 5. 设置监听
+                xhr.onreadystatechange = function(){
+                    if(this.readyState == 4){
+                        if(this.status == 200){
+                            // 成功响应
+                            resolve(this.response);
+                        } else {
+                            // 失败响应
+                            reject(this.response)
+                        }
+                    }
+                }
+            })
+        }
+
+        async function findCategory(){
+            // 查询所有栏目
+            let categories = await getPromise('http://47.106.211.48:8099/manager/category/findAllCategory');
+            console.log(categories);
+            let id = categories.data[6].id;
+            // 根据栏目查询文章
+            let ariticles = await getPromise('http://47.106.211.48:8099/manager/article/findArticle?page=0&pageSize=10&categoryId='+id);
+            console.log(ariticles);
+            let articleId = ariticles.data.list[0].id;
+            // 根据文章查询评论
+            let comment= await getPromise('http://47.106.211.48:8099/manager/comment/findCommentByArticleId?id='+articleId);
+            console.log(comment);
+        }
+        findCategory();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

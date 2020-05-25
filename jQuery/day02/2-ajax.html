@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询文章并显示</title>
+    <!-- 引入jQuery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+            // 点击按钮时请求数据
+            $('button').on('click',function(){
+                $.ajax({
+                    url:'http://47.106.244.1:8099/manager/article/findArticle',
+                    method:'get',
+                    data:{
+                        page:0,
+                        pageSize:10,
+                    },
+                    success:function(res){
+                        // 每次点击按钮时，先将表格清空，再追加
+                        $('tbody').empty();
+                        // 对查询到的所有文章进行遍历
+                        res.data.list.forEach(function(item,index){
+                            console.log(item);
+                            // 生成新的tr，并且将查询到的数据放进去
+                            var newTr = $(`
+                                <tr>
+                                    <td>`+item.id+`</td>
+                                    <td>`+item.title+`</td>
+                                    <td>`+item.content+`</td>
+                                    <td>`+item.source+`</td>
+                                </tr>
+                            `)
+                            // 将新生成的newTr追加到表格的tbody中
+                            $('tbody').append(newTr);
+                        })
+                    }
+                })
+            });
+        })
+    </script>
+</head>
+<style>
+    table {
+        width: 100%;
+    }
+    td {
+        text-align: center;
+    }
+</style>
+<body>
+    <table>
+        <thead>
+            <button>获取数据</button>
+            <tr>
+                <th>编号</th>
+                <th>文章标题</th>
+                <th>文章内容</th>
+                <th>文章封面</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+</html>

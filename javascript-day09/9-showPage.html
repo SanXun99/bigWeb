@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>网页滚动到某一位置显示元素</title>
+	<style>
+		#two{
+			height: 100px;
+			width: 100px;
+			background-color: red;
+			position: fixed;
+			top: 100px;
+			right: 50px;
+			opacity: 0;
+			animation-duration: 1s;
+			animation-fill-mode: forwards;
+			animation-name: ani2;
+		}
+		#one{
+			height: 100px;
+			width: 100px;
+			background-color: lightblue;
+		}
+		/*显示的动画*/
+		@keyframes ani1{
+			0%{
+				opacity: 0;
+			}
+			100%{
+				opacity: 1;
+			}
+		}
+		/*隐藏的动画*/
+		@keyframes ani2{
+			0%{
+				opacity: 1;
+			}
+			100%{
+				opacity: 0;
+			}
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			document.onscroll = function(){
+				// html上方滚动的距离
+				var temp = document.documentElement.scrollTop;
+				if(temp > 300){
+					two.style['animation-name'] = 'ani1'
+				} else {
+					two.style['animation-name'] = 'ani2'
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="one">网页顶部</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div id="two">网页底部</div>
+</body>
+</html>

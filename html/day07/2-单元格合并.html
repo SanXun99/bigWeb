@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单元格合并</title>
+</head>
+<style>
+    table.money {
+        width: 90%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    table.money td {
+        border: 1px solid #cccccc;
+    }
+</style>
+<body>
+    <div class="container">
+        <table class="money">
+            <tbody>
+                <tr>
+                    <td rowspan="2">摘要</td>
+                    <td colspan="3">原值</td>
+                </tr>
+                <tr>
+                    <td>借方</td>
+                    <td>贷方</td>
+                    <td>净值</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

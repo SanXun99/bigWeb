@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>序列化与反序列化在vue中的使用</title>
+	<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+	<!-- 引入vuerouter -->
+	<script src="https://cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<button @click="toHomePage">跳转到首页</button>
+		<button @click="toOtherPage">跳转到其他页面</button>
+		<!-- 路由视图 -->
+		<router-view></router-view>	
+	</div>
+	<script>
+		// 创建了两个组件
+		let Home = {
+			template:`
+				<div>这是首页</div>
+			`,
+			created(){
+				var obj = JSON.parse(this.$route.query.str)
+				console.log(obj)
+				console.log(obj.money)
+			}
+		}
+		let Other = {
+			template:`
+				<div>这是其他页面</div>
+			`
+		}
+
+		// 创建路由
+		let router = new VueRouter({
+			routes:[{
+				// url实际要跳转的路径
+				path:'/home',
+				// 页面实际要加载的组件
+				component:Home
+			},{
+				path:'/other',
+				component:Other
+			}]
+		})
+		new Vue({
+			el:'#app',
+			// 引用路由
+			router,
+			data(){
+				return {
+					
+				}
+			},
+			methods:{
+				// 跳转到首页
+				toHomePage(){
+					var bankCard = {
+						money:999999999,
+						username:'xpf',
+						password:123321,
+						address:'昆山'
+					}
+					// 将对象序列化成一个json字符串
+					var str = JSON.stringify(bankCard);
+					this.$router.push({
+						path:'/home',
+						query:{str}
+					})
+				},
+				// 跳转到其他页面
+				toOtherPage(){
+					this.$router.push({
+						path:'/other'
+					})
+				}
+			}
+			
+		})
+	</script>
+</body>
+</html>

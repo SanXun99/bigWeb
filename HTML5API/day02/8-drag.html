@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖放api</title>
+    <script>
+        window.onload = function() {
+            // 选中目标元素
+            var parent = document.getElementsByClassName('parent')[0];
+            // 选中拖动元素
+            var childs = document.getElementsByClassName('child');
+            // 将类数组对象转为数组
+            childs = Array.from(childs);
+            console.log(childs);
+            childs.forEach(function(item) {
+                // 拖动元素上的开始拖动事件
+                item.ondragstart = function(){
+                    console.log('ondragstatrt');
+                    event.dataTransfer.setData('id',this.id);
+                }
+                // 拖动元素上的正在拖动事件
+                item.ondrag = function(){
+                    console.log('ondrag');
+                }
+                // 拖动元素上的结束拖动事件
+                item.ondragend = function(){
+                    console.log('ondragend');
+                }
+
+            });
+            
+            // 拖动元素进入到目标元素时的事件
+            parent.ondragenter = function() {
+                console.log('ondragenter');
+            }
+            // 拖动元素在目标元素中移动的事件
+            parent.ondragover = function() {
+                // 阻止事件的默认行为，即将该元素设置为可放置其他元素
+                event.preventDefault();
+                console.log('ondragenter');
+            }
+            // 拖动元素放置在目标元素时的事件
+            parent.ondrop = function() {
+                console.log('ondrop');
+                // 获取id
+                var id = event.dataTransfer.getData('id');
+                // 根据id获取到当前拖动的元素
+                var dom = document.getElementById(id);
+                this.appendChild(dom);
+            }
+        }
+    </script>
+</head>
+<style>
+    .parent {
+        border: 1px solid #333;
+        height: 200px;
+        margin: 10px;
+    }
+    .child {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #333;
+        float: left;
+        margin: 10px;
+    }
+</style>
+<body>
+    <!-- 目标元素 1个parent -->
+    <div class="parent">  </div>
+    <!-- 拖动元素 4个child -->
+    <!-- draggable="true" 将元素设置为可拖动 -->
+    <div class="child" id="one" draggable="true">1</div>
+    <div class="child" id="two" draggable="true">2</div>
+    <div class="child" id="three" draggable="true">3</div>
+    <div class="child" id="four" draggable="true">4</div>
+</body>
+</html>

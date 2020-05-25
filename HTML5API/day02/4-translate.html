@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制变形</title>
+    <script>
+        window.onload = function() {
+            // 1.获取canvas
+            var canvas = document.getElementById('canvas');
+            // 2.获取2d上下文
+            var context = canvas.getContext('2d');
+            
+            context.fillStyle='red';
+
+            // 需要在绘制图形之前进行变形操作
+            // 放大坐标轴
+            // context.scale(2, 2);
+            // 缩小坐标轴
+            context.scale(0.5, 0.5);
+
+            // 顺时针旋转坐标轴
+            //context.rotate(Math.PI / 180 * 45);
+            // 逆时针旋转坐标轴
+            context.rotate(-Math.PI / 180 * 45);
+
+            context.fillRect(0,0,100,100);
+            
+            // 移动坐标轴
+            context.translate(100, 100);
+            context.fillRect(0,0,100,100);
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="400" style="border: 1px solid #333;"></canvas>
+</body>
+</html>

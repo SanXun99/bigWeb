@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多个圆形绘制</title>
+    <script>
+        window.onload = function() {
+            // 1.获取canvas
+            var canvas = document.getElementById('canvas');
+            // 2.获取2d上下文
+            var context = canvas.getContext('2d');
+            // 3.绘图样式
+            context.fillStyle = 'red';
+            context.strokeStyle = 'blue';
+            // 4.设置线宽
+            context.lineWidth = 4;
+            
+            pathArc(0,90);
+            pathArc(90,180);
+            pathArc(180,270);
+            pathArc(270,360);
+
+            // 封装圆的路径
+            function pathArc(startAngle,endAngle) {
+                context.beginPath();
+                context.arc(200, 200, 100, Math.PI / 180 * startAngle, Math.PI / 180 * endAngle);
+                context.closePath();
+                context.fill();
+            }
+            
+            
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="400" style="border: 1px solid #333;"></canvas>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文本类型</title>
+	<script>
+		window.onload = function(){
+			var img = document.getElementsByTagName('img')[0];
+			var div = document.getElementsByTagName('div')[0];
+			console.log(img.src);
+			console.log(img.alt);
+			// style只能获取到标签的行内样式，无法获取到通过选择器添加的样式
+			console.log(div.style);
+
+			//设置一个元素内的文本内容
+			div.innerText = '换内容了';
+			//获取一个元素内的html内容，包括换行
+			console.log(div.innerHTML);
+			//获取一个元素内的文本内容
+			console.log(div.innerText);
+		}
+	</script>
+	<style>
+		div{
+			font-size: 30px;
+		}
+	</style>
+</head>
+<body>
+	<img src="" alt="test">
+	<div style="background-color: red;color: white;">
+		div标签
+	</div>
+</body>
+</html>

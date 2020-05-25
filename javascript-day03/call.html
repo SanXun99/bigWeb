@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>改变函数作用域</title>
+</head>
+<body>
+	<script>
+		var name = "xpf";
+		var obj = {
+		    name: "tom"
+		};
+
+		function sayName() {
+		    return this.name;
+		}
+		console.log(sayName.call(this));   
+		console.log(sayName.call(obj));   
+	</script>
+</body>
+</html>

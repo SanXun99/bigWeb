@@ -1,0 +1,494 @@
+复习
+	1、基本数据类型之间的转换
+		1) 其他数据类型转换为number
+			+、-
+			Number()
+
+			1. 字符串转数字类型
+				var str1 = '123'
+				var str2 = 'hello'
+
+				var num1 = +str1;
+				console.log(num1); // 123
+				var num2 = +str2;
+				console.log(num2); // NaN
+			2.布尔类型转数字类型
+				var a = true;
+				var b = false;
+
+				var num1 = +a;
+				var num2 = +b;
+
+				console.log(num1); // 1
+				console.log(num2); // 0
+			3.null、undefined转数字类型
+				var a = null;
+				var num = +a;
+				console.log(num); // 0
+
+				var b = undefined;
+				var num = +b;
+				console.log(num); // NaN
+			4.parseInt、parseFloat
+		2) 其他数据类型转换为字符串类型
+			''或者""	
+			String()
+			toString()	null、undefined不可以使用此方法
+
+			var a = 123;
+			var str1 = '123';
+			var str2 = String(a);
+			var str3 = a.toString();
+		3) 其他数据类型转换为布尔类型
+			!!
+			Boolean()
+
+			1.数字类型转换为布尔类型
+				var a = 1;
+				var b = 0;
+
+				var bn1 = !!a;
+				var bn2 = !!b;
+
+				console.log(bn1); // true
+				console.log(bn2); // false
+			2.字符串类型转布尔类型
+				var str1 = 'hello';
+				var str2 = '';
+
+				var bn1 = !!str1;
+				var bn2 = !!str2;
+
+				console.log(bn1); //true
+				console.log(bn2); //false
+			3.null、undefined转布尔类型
+				返回值都为false
+
+	2、流程控制语句
+		1) 分支语句
+			if(){}
+			if(){} esle{}
+			if(){} else if(){} else{}
+			switch-case
+		2) 循环语句
+			循环三要素：初始化条件、结束判定条件、迭代
+			for循环
+				for(初始化条件;结束判定条件;迭代){
+					循环体
+				}
+			while循环
+				初始化条件
+				while(结束判定条件){
+					循环体
+					迭代
+				}
+			do-while循环
+				初始化条件
+				do {
+					循环体
+					迭代
+				} while(结束判定条件)
+
+    3、对象
+    	1) 介绍
+    	2) 对象的规则
+    		1.对象以{}作为边界
+    		2.一个对象中可以包含多个属性和方法
+    		3.每个属性与属性之间，通过逗号分割
+    		4.每个属性名和属性值之间，通过冒号分隔
+    		5.属性名可以不使用引号，但是，当属姓名包含特殊字符的时候，一定加引号
+    		6.属性值一般固定的值，也可以是变量
+    		7.最后一个属性值后面不需要加逗号
+
+    	3) 对象的创建方式
+    		1.对象字面量
+    			var obj = {
+    				name:'xpf',
+    				age:25
+    			}
+    		2.Object构造函数
+    			var obj = new Object();
+    			obj.name = xpf;
+    			obj.age = 25;
+    	4) 对象访问
+    		点访问符
+    			var obj = {
+    				name:'xpf',
+    				age:25
+    			}
+    			obj.name
+    		中括号访问符
+    			var obj = {
+    				name:'xpf',
+    				age:25
+    			}
+    			var name = 'name';
+    			obj[name]
+
+    			obj['name']
+    	5) 删除属性
+    		var obj = {
+				name:'xpf',
+				age:25,
+				gender:'male'
+			}
+			delete obj.name
+
+学习
+		6) 序列化与反序列化
+			JSON.stringify()
+			JSON.parse()
+			序列化：
+				var obj = {
+					name:'xpf',
+					age:25,
+					gender:'male'
+				}
+				var str = JSON.stringify(obj); 
+				console.log(str); // '{"name":"xpf","age":25,"gender":"male"}'
+				console.log(typeof(str)); // string
+
+			反序列化：
+				var str = '{"name":"xpf","age":"25","gender":"male"}';
+				var obj = JSON.parse(str);
+				console.log(str);
+				console.log(typeof(str));
+				console.log('---');
+				console.log(obj);
+				console.log(obj.gender);
+				console.log(typeof(obj));
+
+			拓展案例：
+				从A页面跳转到B页面的同时，我想将A页面当中的某一对象放在浏览器的地址栏上
+
+		7) 对象的遍历 for-in
+			var obj = {
+			    name:'xpf',
+			    age:25,
+			    gender:'male',
+			    'hello world':function(){
+			        console.log('hello world')
+			    }
+			}
+			for(var key in obj){
+			    console.log(key);
+			    console.log(obj[key]); // 打印所有的属性值
+			}
+			key表示当前对象的所有属性名，每次从obj中获取一个属性名赋值给key，然后执行循环体
+
+			for(var key in obj){
+			    if(key == 'hello world'){
+			        console.log(obj[key]); // 只打印属性名为hello wolrd的属性值
+			    }
+			}
+
+		8) in关键字
+			prop in obj
+			in运算符能够检测左侧操作数(prop)是否是右侧操作数(obj)的成员，左侧操作数是一个字符串，右侧操作数是一个对象
+			var obj = {
+			    name:'xpf',
+			    age:25,
+			    gender:'male'
+			}
+			console.log('name' in obj); // true
+			console.log('age' in obj); // true
+			console.log('sayName' in obj); // false
+
+	4、函数
+		this、闭包、自执行函数、匿名函数
+		1) 函数的用处
+			1. 使用函数封装具有某些功能的代码，执行特定的功能
+				arr.sort()	排序
+				arr.reverse() 反转
+				jQuery	
+				loadsh
+				moment
+				...
+				第三方插件
+			2. 使用函数封装创建对象的模板(构造函数)面向对象
+		2) 函数的定义
+			1. 函数声明
+				function 函数名(){
+					函数体
+				}
+
+				function sayName(){
+					console.log('this is a function')
+				}
+			2. 函数表达式
+				var 函数名 = function(){
+					函数体
+				}
+				var fun = function(){
+				    console.log('this is fun')
+				}
+		3) 函数调用
+			函数名(实参);
+			函数名.call(this,实参列表);
+			函数名.apply(this,实参数组);
+
+			function sayMessage(name,age,gender){
+			    console.log(name)
+			    console.log(age)
+			    console.log(gender)
+			}
+
+			var name = 'xpf';
+			var age = 25;
+			var gender = 'male';
+			//函数名(实参);
+			sayMessage(name,age,gender);
+			//函数名.call(this,实参列表);
+			sayMessage.call(this,name,age,gender);
+			//函数名.apply(this,实参数组);
+			sayMessage.apply(this,[name,age,gender])
+
+			拓展：
+				1、函数使用括号与不适用括号的区别
+					1.带括号
+					2.不带括号
+
+					错误代码：
+						function sayHello(){
+							console.log('hello world');
+						}
+						//在这一行代码，实际上已经调用了函数sayHello，打印出了hello world，但是，由于函数没有使用return，所以该函数没有返回值
+						var info = sayHello();	
+						var obj = {
+							say:info
+						}
+						console.log(obj.say); // undefined
+
+					正确代码：
+						function sayHello(){
+							console.log('hello world');
+						}
+						var info = sayHello;	
+						var obj = {
+							say:info
+						}
+						console.log(obj.say); // [Function: sayName]
+				2、console.log与return的区别
+					1.使用console.log的时候，返回的是一个undefined
+					2.使用return的时候，调用了函数会有返回值
+
+					错误代码：
+						function sayHello(){
+							console.log('hello world');
+						}
+						//在这一行代码，实际上已经调用了函数sayHello，打印出了hello world，但是，由于函数没有使用return，所以该函数没有返回值
+						var info = sayHello();	
+						var obj = {
+							say:info
+						}
+						console.log(obj.say); // undefined
+					正确代码：
+						function sayHello(){
+						    return 'hello world';
+						}
+						var info = sayHello();
+						var obj = {
+						    say:info
+						}
+						console.log(obj.say,'---');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			路由
+				/video/content
+			路由携带参数
+				?videoId=1
+
+		4) 函数声明的提升
+			0.什么叫提升
+			函数的声明和变量的声明会从它们在代码中出现的位置被移动当前作用域的最上方，进行执行，这个过程叫做提升
+			1.
+				a = 1;
+				var a;
+				console.log(a); // 1
+
+				=>
+
+				var a;
+				a = 1;
+				console.log(a); 
+
+			2.
+				console.log(b);	// undefined
+				var b = 2;
+
+				=>
+
+				var b;
+				console.log(b);	// undefined
+				b = 2;
+
+			3.函数的提升
+				info();
+				function info(){
+				    var c = 3;
+				    console.log(c);
+				}
+
+				=>
+
+				function info(){
+				    var c = 3;
+				    console.log(c);  // 3
+				}
+				info();
+
+			4.函数表达式的提升
+				fun();
+				var fun = function(){
+				    var d = 4;
+				    console.log(d);
+				}
+
+				=>
+
+				var fun;
+				fun();
+				fun = function(){
+				    var d = 4;
+				    console.log(d);
+				}
+				会报错fun is not a function
+
+			5.函数优先
+				var foo = function(){
+				    console.log(2);
+				}
+
+				function foo(){
+				    console.log(1);
+				}
+
+				foo();
+
+				=>
+
+				function foo(){
+				    console.log(1);
+				}
+				var foo;
+				foo = function(){
+				    console.log(2);
+				}
+
+				foo(); // 2
+				函数声明和函数表达式都会被提升，但是函数声明是在函数表达式之前被提升，也叫函数优先
+
+		5) 值传递和引用传递
+			值传递
+				var a = 3;
+				var b = a;
+
+				b++;
+				console.log(a);	// 3
+				console.log(b); // 4
+			引用传递
+				var obj = {
+				    name:'xpf',
+				    age:25,
+				    gender:'male'
+				}
+				var obj2 = obj
+				obj2.age++;
+
+				console.log(obj); // { name: 'xpf', age: 26, gender: 'male' }
+				console.log(obj2); // { name: 'xpf', age: 26, gender: 'male' }
+			存储：
+				1) 基本数据类型保存在栈内存当中，它们的值都有固定的大小，通过按置访问
+				2) 引用数据类型是保存在堆内存中的对象，值的大小不确定，栈内存当中存放的是该对象的访问地址，JavaScript不允许直接访问堆内存中的值，因此操作的实际都是对象的引用
+			复制：
+				1) 基本数据类复制时，系统会自动为新的变量分配一个新的值，最后这些变量都是相互独立互不影响
+				2) 引用数据类型复制时，同样会为新的变量分配一个新的值，保存在栈内存中，不同的是，这个值仅仅是引用数据类型的一个地址指针
+			注意：堆内存中，同一个值可以被多个引用地址指向，但是同一个引用地址不能同时指向多个堆内存中的值
+
+		*6) 引用数据类型的比较
+		 	JSON.stringify()
+
+明天中午
+	座谈会
+明天下午
+	就业讲座
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---基础知识---
+1、在外层使用了双引号，内层再去使用引号的时候，一定要使用单引号
+	正确：
+	"{name:'xpf'}"
+	'{name:"xpf"}'
+	错误：
+	"{name:"xpf"}"
+	'{name:'xpf'}'
+2、罗翔 厚大法考 张三
+

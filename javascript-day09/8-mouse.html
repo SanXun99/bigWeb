@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>光标</title>
+	<!-- 引入vue -->
+	<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+	<!-- 引入axios -->
+	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div @mouseenter='findAll'>查询</div>
+	</div>
+
+	<script>
+		// vue构造函数
+		new Vue({
+			el:"#app",
+			data(){},
+			created(){
+				// this.findAll()
+				// 历史记录
+			},
+			methods:{
+				// 查询栏目
+				findAll(){
+					// 利用axios请求接口
+					axios.get('http://47.106.244.1:8099/manager/category/findAllCategory').then((res)=>{
+						console.log(res.data.data)
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

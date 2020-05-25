@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文本节点的方法</title>
+	<script>
+		window.onload = function(){
+			// 获取div
+			var dom = document.getElementsByClassName('myDiv')[0];
+			console.log(dom.style);
+			// 获取属性值
+			console.log(dom.getAttribute('style'));
+
+			// 设置前		
+			console.log(dom.getAttribute('class'));
+			// 设置
+			// console.log(dom.setAttribute('class','xpf'));
+			// 设置后
+			console.log(dom.getAttribute('class'));
+
+			// 返回文档中匹配指定css选择器的第一个元素
+			var divs = document.querySelector('.myDiv');
+			console.log(divs);
+			// 返回文档中匹配指定css选择器的所有元素
+			var divAll = document.querySelectorAll('.myDiv');
+			console.log(divAll);
+
+		}
+	</script>
+</head>
+<body>
+	<div style="color: red;" class="myDiv"></div>
+	<div style="color: red;" class="myDiv"></div>
+	<div style="color: red;" class="myDiv"></div>
+	<div style="color: red;" class="myDiv"></div>
+</body>
+</html>

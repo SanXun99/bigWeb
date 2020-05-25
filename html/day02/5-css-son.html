@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>层次选择器</title>
+</head>
+<style>
+    .left_nav #xy ~ li{
+        background-color: pink;
+    }
+</style>
+<body>
+    <div class="top_nav">
+        <ul>
+            <li>首页</li>
+            <li>校园新闻</li>
+            <li>招生就业</li>
+        </ul>
+    </div>
+
+    <div class="left_nav">
+        <ul>
+            <li id="xy">软件学院</li>
+            <p>你好</p>
+            <li>艺术学院</li>
+            <li>机械学院</li>
+        </ul>
+    </div>
+</body>
+</html>

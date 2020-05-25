@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>栅格系统</title>
+    <!-- 引入css文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入jQuery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <!-- 引入bootstrap的js文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <!-- 基本使用 -->
+    <div class="row">
+        <div class="col-md-6">123</div>
+        <div class="col-md-6">456</div>
+    </div>
+
+    <!-- 简化操作 -->
+    <div class="row">
+        <div class="col">一二三</div>
+        <div class="col">四五六</div>
+        <div class="col">七八九</div>
+    </div>
+
+    <!-- 嵌套使用 -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">1</div>
+                <div class="col-md-6">2</div>
+            </div>
+        </div>
+        <div class="col-md-6">456</div>
+    </div>
+</body>
+</html>

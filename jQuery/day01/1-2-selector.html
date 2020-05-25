@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery选择器</title>
+    <!-- 引入jQuery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+            // 获取按钮
+            var btn = $('button');
+            // 给按钮绑定事件
+            btn.on('click',function(){
+                // 获取被选中的option
+                // val()用来获取表单元素的值
+                var opt = $('select option:selected').val();
+                console.log(opt);
+            })
+        })
+    </script>
+</head>
+<body>
+    <button>获取值</button>
+    <select name="" id="">
+        <option value="1">test</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+</body>
+</html>

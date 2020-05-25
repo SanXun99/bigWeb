@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let obj = {
+            name:'zwj',
+            age:21,
+            gender:'male'
+        }
+        let symbol1 = Symbol('province');
+        let symbol2 = Symbol('city');
+        let symbol3 = Symbol('city');
+        obj[symbol1]= '福建';
+        obj[symbol2]= '龙岩';
+        obj[symbol3]= '苏州';
+        console.log(obj);
+        console.log(obj.city);// undefined
+        console.log(obj['city']);// undefined
+        console.log(Object.getOwnPropertySymbols(obj));
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

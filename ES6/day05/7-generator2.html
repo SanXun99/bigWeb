@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>generator函数实现异步代码同步化</title>
+  <script>
+    let $ = {
+      getPromise(url){
+        return new Promise((resolve,reject)=>{
+          // 1. 实例化XHR对象
+          var xhr = new XMLHttpRequest();
+          // 2. 打开请求（设置请求行）
+          xhr.open('get',url);
+          // 3. 发送请求
+          xhr.send();
+          // 4. 设置响应结果为json格式
+          xhr.responseType = 'json';
+          // 5. 设置监听
+          xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+              if(this.status == 200){
+                // 响应成功
+                resolve(this.response);
+              } else{
+                // 响应失败
+                reject(this.response);
+              }
+            }
+          }
+        })
+      }
+    }
+    
+    // 异步代码
+    // $.getPromise('http://39.96.21.48:8099/manager/category/findAllCategory')
+    // .then((res)=>{
+    //   console.log(res)
+    // })
+    // .catch((err)=>{
+    //   console.log(err)
+    // })
+    // $.getPromise('http://39.96.21.48:8099/manager/user/findAllUser')
+    // .then((res)=>{
+    //   console.log(res)
+    // })
+    // .catch((err)=>{
+    //   console.log(err)
+    // })
+
+    // generator函数实现异步代码的同步化
+    function* xpf(){
+      let cate_url = 'http://39.96.21.48:8099/manager/category/findAllCategory';
+      let categories = yield call($.getPromise,cate_url);
+      console.log('categories',categories)
+      let obj = {
+        page:0,
+        pageSize:10,
+        categoryId:categories.data[1].id
+      }
+      console.log(obj)
+
+      let user_url = 'http://39.96.21.48:8099/manager/user/findAllUser';
+      let users = yield call($.getPromise,user_url);
+      console.log('users',users)
+    }
+
+    // 获取generator函数的遍历器对象
+    let iterator = xpf();
+    iterator.next();
+
+    // handler为调用方法，params为请求地址
+    function call(handler,params){
+      handler(params)
+      .then((res)=>{
+        // 将res作为当前yield表达式的返回值
+        iterator.next(res)
+      })
+    }
+  </script>
+</head>
+<body>
+  
+</body>
+</html>

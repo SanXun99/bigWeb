@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件三要素</title>
+	<script>
+		window.onload = function(){
+			// 1. 获取事件源
+			var dom = document.getElementsByTagName('div')[0];
+			// 2. 事件处理函数
+			dom.onclick = function(event){
+				// 3. 事件对象event
+				console.log(event);
+			}
+		}
+	</script>
+</head>
+<body>
+	<div>点击</div>
+</body>
+</html>

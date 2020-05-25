@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制渐变</title>
+    <script>
+        window.onload = function() {
+            // 1.获取canvas
+            var canvas = document.getElementById('canvas');
+            // 2.获取2d上下文
+            var context = canvas.getContext('2d');
+            
+            // 3.创建渐变对象
+            var gradient = context.createLinearGradient(0, 150, 400, 150);
+            // 4.添加渐变颜色和偏移量
+            gradient.addColorStop(0, 'red');
+            gradient.addColorStop(0.5, 'blue');
+            gradient.addColorStop(1, 'yellow');
+            // 5.使用渐变对象
+            context.fillStyle = gradient;
+            // 6.绘制矩形
+            context.fillRect(0,0,400,300);
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="400" style="border: 1px solid #333;"></canvas>
+</body>
+</html>

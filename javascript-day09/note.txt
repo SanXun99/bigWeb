@@ -1,0 +1,361 @@
+28号
+	天眼 -> 地外文明
+	是一件好事么？
+	《三体》
+
+复习
+	1、高级面向对象
+		var obj = {
+			name:'xpf',
+			age：25,
+			gender:'male'
+		}
+		var obj2 = {
+			name:'xpf',
+			age：25,
+			gender:'male'
+		}
+		var obj3 = {
+			name:'xpf',
+			age：25,
+			gender:'male'
+		}
+
+		问题：代码冗余
+
+		批量创建对象？
+
+	2、封装/创建对象的过程
+		1) 工厂函数模式
+			function factory(name,age,gender){
+				var obj = {
+					name:name,
+					age:age,
+					gender:gender,
+					sayName:function(){
+						console.log('111')
+					}
+				}
+				return obj;
+			}
+			-->
+			function factory(name,age,gender){
+				return {
+					name:name,
+					age:age,
+					gender:gender,
+					sayName:function(){
+						console.log('111')
+					}
+				}
+			}
+
+			var obj1 = factory('xpf',25,'male');
+			var obj2 = factory('zhangsan',15,'male');
+			obj1.sayName();
+			obj2.sayName();
+
+			需要两个不同类型的对象
+			var person = factory('zhangsan',20,'male');
+			var dog = factory('小黑',3,'雄性');
+
+			解决：
+				代码冗余
+			问题：
+				1、类型无法细分
+				2、函数会重复的创建/破坏封装性
+
+		2) 构造函数模式 --> 手机
+			系统内置构造函数
+				Math、Object、Array、Date...
+			自定义构造函数(首字母大写)
+				function Person(){}
+
+				//人的构造函数
+				function Person(name,age,gender){
+					this.name = name;
+					this.age = age;
+					this.gender = gender;
+					this.words = function(){
+						console.log('111')
+					}
+				}
+
+				var per1 = new Person('xpf',25,'male');
+				per1.words();
+
+				//狗的构造函数
+				function Dog(name,age,gender){
+					this.name = name;
+					this.age = age;
+					this.gender = gender;
+				}
+				var dog1 = new Dog('小黑',3,'雄性');
+
+
+				构造函数与普通函数区别：
+					1、构造函数也是普通函数，并且创建方式是一样的，但是首字母大写(规范)
+					2、调用方式
+						构造函数：通过new关键字调用 new Person();
+						普通函数：直接调用person();
+					3、返回值
+						构造函数：
+							Person {}
+						普通函数：
+							undefined
+
+				解决：
+					解决了类型无法细分问题
+				问题：
+					函数会重复的创建/破坏封装性
+
+		3) 构造函数与原型结合(最终解决方案)
+			属性保存在实例中，方法保存在构造函数的原型上
+			function Person(name,age,gender){
+				this.name = name;
+				this.age = age;
+				this.gender = gender;
+			}
+
+			Person.prototype.money = function(){
+				console.log('有钱')
+			}
+
+	3、继承
+		1) 原型链继承
+			Person2.prototype = new Person1();
+			Person2.prototype.constructor = Person2;
+
+			function Person1(name,age,gender){
+				this.name = name;
+				this.age = age;
+				this.gender = gender;
+			}
+
+			Person1.prototype.money = function(){
+				console.log('有钱')
+			}
+			var per1 = new Person1('xpf',25,'male')
+			per1.money();
+
+			Person2.prototype = new Person1();
+			Person2.prototype.constructor = Person2;
+
+			function Person2(name,age,gender){
+				this.name = name;
+				this.age = age;
+				this.gender = gender;
+			}
+			var per2 = new Person2('zhangsan',15,'male')
+			per2.money();
+
+		2) 借用构造函数		
+			不仅继承方法，也可以继承属性
+			Person1.call(this,name,age,gender);
+
+			function Person1(name,age,gender){
+				this.name = name;
+				this.age = age;
+				this.gender = gender;
+			}
+
+			Person1.prototype.money = function(){
+				console.log('有钱')
+			}
+			var per1 = new Person1('xpf',25,'male')
+			per1.money();
+
+			Person2.prototype = new Person1();
+			Person2.prototype.constructor = Person2;
+
+			function Person2(name,age,gender){
+				Person1.call(this,name,age,gender);
+			}
+			var per2 = new Person2('zhangsan',15,'male')
+			per2.money();
+
+		4、DOM	
+			1) dom树
+				Node(节点)
+					文档节点	Document类型
+					元素节点	Element类型
+					文本节点	Text类型
+					注释节点	Comment类型
+			2) 实例化
+				var dom = document.getElementById('one');
+			3) API
+				1. Document类型 --> document
+					属性
+						title
+						head
+						body
+					方法
+						通过id 			getELementById()
+						通过class名		getELementsByClassName()[0]
+						通过name属性		getELementsByName()[0]
+						通过标签名		getELementsByTagName()[0]
+
+学习
+	*1、Element(元素节点)					
+		标签
+			div、p、span、img...
+		属性
+			id
+			name
+			href
+			src
+			alt
+			target
+			style
+				获取元素的样式
+			innerHTML
+				获取或设置一个元素内的html内容，包括换行
+			innerText
+				获取或设置一个元素内的文本内容
+		方法
+			getAttribute(属性名)
+				返回指定的属性值
+
+				dom.getAttribute('style')
+				返回style的属性值
+
+			setAttribute(属性名，属性值)
+				把指定的属性设置或者修改为指定的值，注意该方法没有返回值
+
+				dom.setAttribute('class','xpf')
+				把class的值修改为xpf
+
+			querySelector(选择器)
+				返回文档中匹配指定css选择器的第一个元素
+			querySelectorAll(选择器)
+				返回文档中匹配指定css选择器的所有元素
+
+	2、Text
+
+	3、Comment
+
+	4、节点的操作
+		1) 节点的创建
+			document.createElement('标签名')
+
+			document.createElement('div')表示创建一个div标签
+
+		2)节点的追加
+			1. appendChild(newDom);
+
+			在parent的最后放追加一个新节点，newDom可以是新创建的节点，也可以是原本已存在的节点
+			注意：
+				任何DOM节点不能同时出现在文档中多个位置
+				==>
+				如果追加的节点原本已存在，只会改变该节点的位置
+
+			2. insertBeofre(newDom,item1)
+				第一个参数为要插入的节点
+				第二个参数为要插入的位置
+
+		3) 节点的删除
+			removeChild('节点')
+
+			parent.removeChild(item3);
+			将父元素parent的孩子item3删除
+
+		4) 节点的复制(克隆)
+			1. 浅复制
+				cloneNode() / cloneNode(false)
+				默认为浅复制，只复制标签，内容不复制
+
+			2. 深复制
+				cloneNode(true)
+				传递一个参数true，复制的是标签及内容
+
+	*5、事件
+		1) 事件的三要素
+			1. 事件目标
+				获取事件源
+			2. 事件处理函数
+				为事件源绑定事件处理函数，当绑定的事件类型被触发的时候执行该函数
+			3. 事件对象
+				当事件处理函数执行的时候，dom会将事件对象作为参数传递给事件处理函数
+
+				一般用event表示
+
+		2) 事件流
+			描述的是从页面中接收事件的顺序
+
+			1. 事件冒泡
+				含义：
+					事件开始由最具体的元素接收，然后逐级向上传播到不具体的节点
+				特点：
+					从内往外
+				前提：
+					1、 元素需要嵌套
+					2、 每层元素上都要绑定事件
+
+				<div class="outer">
+					<div class="center">
+						<div class="inner"></div>
+					</div>
+				</div>
+
+				阻止事件冒泡
+					event.stopPropagation()
+				当前点击的事件对象
+					event.target
+
+			2. 事件捕获
+				含义：
+					不具体的DOM节点应该更早的接收事件，而具体的节点最后接收到事件
+				特点：
+					由外往内
+				前提：
+					1、 元素需要嵌套
+					2、 每层元素上都要绑定事件
+				参数：
+					第一个参数是	事件类型(click、mouseover...)
+					第二个参数是	事件处理函数
+					第三个参数是	布尔值，用域描述事件是冒泡还是捕获，该参数可选
+						true  --> 事件捕获
+						false --> 事件冒泡
+				语法：
+					outer.addEventListener('click',function(){
+						console.log(this)
+					},true)
+
+		3) 事件绑定方式
+			1. onxxx
+				onclick、onmouseover...
+				属性，简单，兼容性好
+
+				outer.onclick = function(){}
+
+			2. addEventListener
+				方法
+				outer.addEventListener('click',function(){
+					console.log(this)
+				},true)
+				对浏览器版本有要求
+
+			3. attachEvent
+				方法
+				IE低版本下才能兼容
+
+		4) 事件类型
+			click 	鼠标点击
+
+			scroll 	页面滚动
+
+			keyup	键盘抬起
+			keydown	键盘落下
+
+			focus	聚焦
+			blur	失焦
+
+			mouseover	光标移动到元素上，支持子元素
+			mouseout	光标移出元素，支持子元素
+
+			mouseenter	光标移动到元素上，不支持子元素
+			mouseleave	光标移出元素，不支持子元素
+
+			onload	
+				window.onload 当前页面内容加载完毕
+

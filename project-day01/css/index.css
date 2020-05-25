@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body,.wrapper{
+    height: 100%;
+}
+/* 页面左侧样式 */
+.left{
+    height: 100%;
+    width: 15%;
+    background-color: rgb(48,65,86);
+    float: left;
+}
+.left-header{
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 40, 77);
+}
+.left-header img{
+    height: 30px;
+}
+.left-header span{
+    color: #fff;
+    margin-left: 10px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.left-nav li{
+    height: 60px;
+    text-align: center;
+    line-height: 50px;
+    color: #ccc;
+    list-style: none;
+    font-size: 16px
+}
+.left-nav li:hover{
+    cursor: pointer;
+}
+.left-nav i{
+    float: left;
+    margin-left: 40px;
+}
+
+/* 树形结构的样式 */
+#category-tree li span {
+    font-size: 14px;
+}
+#category-tree {
+    border: none;
+    background-color: #fff;
+}
+
+
+/* 页面右侧样式 */
+.right{
+    height: 100%;
+    width: 85%;
+    background-color: rgb(240,242,245);
+    float: left;
+}
+.right-header{
+    height: 60px;
+    background-color: #fff;
+}
+.right-header img{
+    height: 30px;
+    border-radius: 100%;
+    float: right;
+    margin-right: 40px;
+    margin-top: 15px;
+}
+.right-content{
+     background-color: #fff;
+     margin: 10px;
+     height: 80%;
+     border-radius: 5px;
+     padding: 10px;
+}

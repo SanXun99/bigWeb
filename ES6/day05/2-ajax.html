@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function getCallBack(url,successHandler,errorsHandler) {
+            // 1. 实例化xhr对象
+            var xhr = new XMLHttpRequest();
+            // 2. 打开请求
+            xhr.open('get',url);
+            // 3. 发送请求
+            xhr.send();
+            // 4. 设置响应对象为jason对象
+            xhr.responseType = 'json';
+            // 5. 设置监听
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    if(this.status == 200){
+                        // 成功的回调函数
+                        successHandler(this.response);
+                    } else {
+                        // 失败的回调函数
+                        errorsHandler(this.response)
+                    }
+                }
+            }
+        }
+        getCallBack('http://47.106.211.48:8099/manager/category/findAllCategory',function(res){
+            console.log(res);
+        },function(err){
+            console(err);
+        });
+        // 先打印end，再输出请求结果
+        console.log('end');
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

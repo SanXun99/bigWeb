@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音视频</title>
+    <script>
+        window.onload = function(){
+            // 选中div
+            var btnDiv = document.getElementById('btn-div');
+            // 选中video
+            var video = document.getElementsByTagName('video')[0];
+            // 事件代理
+            btnDiv.onclick = function(event){
+                console.log();
+                var text = event.target.innerText;
+                if(text == '播放'){
+                    video.play();
+                }
+                if(text == '暂停'){
+                    video.pause();
+                }
+                if(text == '刷新'){
+                    video.load();
+                }
+                if(text == '快进'){
+                    video.currentTime += 10;
+                    //video.currentTime = video.currentTim+10;
+                }
+                if(text == '快退'){
+                    video.currentTime -= 10;
+                }
+                if(text == '快倍数'){
+                    // console.log(video.playbackRate);
+                    video.playbackRate = 2.0;
+                }
+                if(text == '慢倍数'){
+                    video.playbackRate = 0.5;
+                }
+
+            };
+            // 通过上下键操控音量，左右键操控快进快退
+            // keyCode
+            document.onkeydown = function(event){
+                // console.log(event.keyCode);
+                //左，快退
+                if(event.keyCode == 37){
+                    video.currentTime -= 10;
+                }
+                // 右，快进
+                if(event.keyCode == 39){
+                    video.currentTime += 10;
+                }
+                // 上，加音量
+                if(event.keyCode == 38){
+                    // console.log(video.volume);
+                    if(video.volume <= 0.9) {
+                        video.volume += 0.1;
+                    }
+                }
+                // 下，减音量
+                if(event.keyCode == 40){
+                    // console.log(video.volume);
+                    if(video.volume > 0.1) {
+                        video.volume -= 0.1;
+                    }
+                }
+            }
+            
+            // 将播放和暂停放在同一个按钮上
+            var toggleBtn = document.getElementById('toggle');
+            var toggleBtn2 = document.getElementById('toggle2');
+            // 根据按钮的值判断是否播放
+            toggleBtn.onclick = function() {
+                if(this.innerText == '播放') {
+                    video.play();
+                    this.innerText = '暂停';
+                } else {
+                    video.pause();
+                    this.innerText = '播放';
+                }
+            }
+            // 根据视频的状态判断是否播放
+            toggleBtn2.onclick = function() {
+                if(video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            }
+            
+            // 获取视频播放的百分比(进度)
+            // 视频当前播放时间、视频长度、百分比存储到浏览器
+            var perBtn = document.getElementById('per');
+            perBtn.onclick = function() {
+                // 视频总长度
+                var total = video.duration;
+                // 视频当前播放的位置
+                var current = video.currentTime;
+                // 计算出的百分比
+                var result = (current/total*100).toFixed(2) + '%';
+                console.log(result);
+                // <div>{{result}}%</div>
+                // 获取需要显示百分比的div
+                var currentDiv = document.getElementById('currentDiv');
+                // 设置百分比
+                currentDiv.innerHTML = result;
+            }
+        }
+    </script>
+</head>
+<body>
+    <video src="./1.mp4" controls style="width: 500px;"></video>
+    <div id="btn-div">
+        <button>播放</button>
+        <button>暂停</button>
+        <button>刷新</button>
+        <button>快进</button>
+        <button>快退</button>
+        <button>快倍数</button>
+        <button>慢倍数</button>
+    </div>
+    <div>
+        <button id="toggle">播放</button>
+        <button id="toggle2">播放/暂停</button>
+        <button id="per">获取播放进度</button>
+        <div id="currentDiv"></div>
+    </div>
+</body>
+</html>

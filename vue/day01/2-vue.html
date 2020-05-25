@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+</head>
+<body>
+    <!-- 容器 -->
+    <div id="app">
+        {{msg}}
+    </div>
+    <!-- vue的js代码 -->
+    <script>
+        let vm = new Vue({
+            // 绑定模板
+            el:'#app',
+            // 数据，定义在data中的数据可以在容器中访问
+            data(){
+                return {
+                    msg:'hello'
+                }
+            }
+        })
+        // vm为vue的实例对象
+        console.log(vm);
+        console.log(vm.msg);
+
+    </script>
+</body>
+</html>

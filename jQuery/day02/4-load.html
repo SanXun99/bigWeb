@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面切换</title>
+     <!-- 引入jQuery -->
+     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+</head>
+<style>
+    .left {
+        height: 300px;
+        background-color: teal;
+        float: left;
+        width: 20%;
+    }
+    .right {
+        height: 300px;
+        background-color: #ccc;
+        float: right;
+        width: 80%;
+    }
+</style>
+<script>
+    $(function(){
+        // 方法二：事件代理
+        $('.left').on('click',function(event) {
+            $(event.target).css({'background':'red','color':'white','font-size':'20px'});
+            $(event.target).siblings().css({'background':'none','color':'#333','font-size':'14px'});
+            if(event.target.innerText == '文章管理'){
+                $('.right').load('./4-1-article.html');
+            }
+            if(event.target.innerText == '栏目管理'){
+                $('.right').load('./4-2-category.html');
+            }
+            if(event.target.innerText == '评论管理'){
+                $('.right').load('./4-3-comment.html');
+            }
+        })
+        // 方法一：
+        /* $('.left div:eq(0)').click(function(event){
+            $('.right').load('./4-1-article.html');
+            $(event.target).css({'background':'red','color':'white','font-size':'20px'});
+            $(event.target).siblings().css({'background':'none','color':'#333','font-size':'14px'});
+        })
+        $('.left div:eq(1)').click(function(event){
+            $('.right').load('./4-2-category.html');
+            $(event.target).css({'background':'red','color':'white','font-size':'20px'});
+            $(event.target).siblings().css({'background':'none','color':'#333','font-size':'14px'});
+        })
+        $('.left div:eq(2)').click(function(event){
+            $('.right').load('./4-3-comment.html');
+            $(event.target).css({'background':'red','color':'white','font-size':'20px'});
+            $(event.target).siblings().css({'background':'none','color':'#333','font-size':'14px'});
+        }) */
+    })
+</script>
+<body>
+    <!-- 左侧为导航 -->
+    <div class="left">
+        <div>文章管理</div>
+        <div>栏目管理</div>
+        <div>评论管理</div>
+    </div>
+    <div class="right">
+        <!-- 页面切换 -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图像平铺</title>
+    <script>
+        window.onload = function() {
+            // 1.获取canvas
+            var canvas = document.getElementById('canvas');
+            // 2.获取2d上下文
+            var context = canvas.getContext('2d');
+            
+            // 3.创建图像，并设置地址
+            var image = new Image();
+            image.src = './logo.png';
+
+            // 图片加载完毕之后
+            image.onload = function() {
+                // 创建平铺对象
+                // var pattern = context.createPattern(image);  错误，第二个参数不能省略
+                var pattern = context.createPattern(image, 'repeat');
+                // var pattern = context.createPattern(image, 'repeat-x');
+                // var pattern = context.createPattern(image, 'repeat-y');
+                // var pattern = context.createPattern(image, 'no-repeat');
+                // 平铺对象的使用
+                context.fillStyle= pattern;
+                // 绘制图形
+                context.fillRect(0,0,600,400);
+                
+            }
+            
+            
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="400" style="border: 1px solid #333;"></canvas>
+</body>
+</html>

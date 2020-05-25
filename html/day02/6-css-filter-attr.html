@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>属性过滤器</title>
+</head>
+<style>
+    form > *[name*=e] {
+        border: 1px solid red;
+    }
+</style>
+<body>
+    <form action="">
+        用户名<input type="text" name="username"><br>
+        姓名<input type="text" name="realname"><br>
+        密码 <input type="password" name="password"><br>
+        方向 
+        <select name="department" id="one">
+            <option value="JavaEE">JavaEE</option>
+            <option value="WebUi">WebUi</option>
+        </select>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

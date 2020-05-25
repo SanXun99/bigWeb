@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件捕获</title>
+	<style>
+		.outer{
+			height: 300px;
+			width: 300px;
+			background-color: teal;
+			border:1px solid #333;
+			margin:0 auto;
+		}
+		.center{
+			height: 200px;
+			width: 200px;
+			background-color: lightblue;
+			border:1px solid #333;
+			margin: 50px;
+		}
+		.inner{
+			height: 100px;
+			width: 100px;
+			background-color: green;
+			border:1px solid #333;
+			margin:50px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			// 获取最外层的div
+			var outer = document.getElementsByClassName('outer')[0];
+			// 获取中间的div
+			var center = document.getElementsByClassName('center')[0];
+			// 获取最内层的div
+			var inner = document.getElementsByClassName('inner')[0];
+
+			// 给最外层绑定事件
+			outer.addEventListener('click',function(){
+				console.log(this)
+			},true)
+			// 给中间的绑定事件
+			center.addEventListener('click',function(){
+				console.log(this)
+			},true)
+			// 给最内层绑定事件
+			inner.addEventListener('click',function(){
+				console.log(this)
+			},true)
+		}
+	</script>
+</head>
+<body>
+	<div class="outer">
+		<div class="center">
+			<div class="inner"></div>
+		</div>
+	</div>
+</body>
+</html>

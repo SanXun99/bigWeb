@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            url:'http://47.106.211.48:8099/manager/category/findAllCategory',
+            method:'get',
+            data:{},
+            success:function(res){
+                res.data.forEach((item)=>{
+                    $.ajax({
+                        url:'http://47.106.211.48:8099/manager/article/findArticle',
+                        method:'get',
+                        data:{
+                            page:0,
+                            pageSize:10,
+                            categoryId:item.id
+                        },
+                        success:function(res){
+                            console.log(res.data.list);
+                        }
+                    })
+                })
+            }
+        })
+        
+        // 现象: 两个请求的结果不确定是谁先返回
+        // 需求: 根据栏目查询对应的文章(先有栏目数据，再根据栏目id查询该栏目下对应的所有文章)
+        // 问题: 两个请求的结果是否可以出现一个顺序？
+        //      嵌套: 会出现回调地狱的现象
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
