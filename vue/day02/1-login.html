@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录流程</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <!-- 引入axios -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="token">
+            你好：{{username}}
+            <a href="">退出登录</a>
+        </div>
+
+        <div v-else>
+            <a href="" v-on:click.prevent="login">登录</a>
+            <a href="">没有账号？请注册</a>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    token: localStorage.getItem('token'),
+                    username: 'xpf'
+                }
+            },
+            
+            methods: {
+                login() {
+                    let obj = {
+                        username:'张三',
+                        password:123321
+                    }
+                    axios.post('http://39.96.21.48:8099/manager/user/login',obj)
+                    .then((res)=>{
+                        localStorage.setItem('token',res.data.data.token)
+                        this.token = res.data.data.token
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

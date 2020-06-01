@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>滚动到页面最上方</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <!-- 滚动的样式插件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"></script>
+</head>
+<style>
+    #to-top-btn{
+        position: fixed;
+        bottom: 10%;
+        right: 5%;
+        height: 80px;
+        width: 80px;
+        border-radius: 100%;
+        border: 0;
+        cursor: pointer;
+    }
+    #to-top-btn:hover{
+        background-color: rgba(0, 0, 0,0.4);
+        color: #fff;
+        
+    }
+    ul{
+        height: 400px;
+        overflow: auto;
+    }
+    li{
+        height: 200px;
+    }
+</style>
+<body>
+    <div id="app">
+        <ul id="scrolUl">
+            <li>123</li>
+            <li>123</li>
+            <li>123</li>
+            <li>123</li>
+        </ul>
+        <div style="height: 3000px;"></div>
+        <button id="to-top-btn" ref="toTopBtn" @click="toTopHandler">回到顶部</button>
+    </div>
+    <script>
+
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+
+                }
+            },
+            mounted(){
+                // 1. 监听页面滚动
+                window.addEventListener('scroll',this.scrollToTop);
+                // 3. 处理bug：页面挂载时，将上浮按钮隐藏
+                this.$refs.toTopBtn.style.display = 'none';
+                $('#scrolUl').niceScroll({
+                    cursorwidth:'6px',
+                    cursorcolor:'yellow',
+                    cursorborderradius:0
+                });
+            },
+            methods:{
+                // 4. 定义滚动到页面最上方的方法：
+                toTopHandler(){
+                    // 获取最外层html元素
+                    let doc = document.documentElement;
+                    $(doc).animate({
+                        scrollTop:0
+                    },500)
+                },
+                // 2. 定义方法：监听页面滚动时，显示与隐藏上浮按钮
+                scrollToTop(){
+                    let scrollTop = document.documentElement.scrollTop;
+                    // outerHeight返回元素的高度(包括padding和border)
+                    let browserHeight = window.outerHeight;
+                    if(scrollTop > browserHeight){
+                        //显示按钮
+                        this.$refs.toTopBtn.style.display = 'block';
+                    } else {
+                        //隐藏按钮
+                        this.$refs.toTopBtn.style.display = 'none';
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+</html>

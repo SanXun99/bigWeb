@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>数据的更新</title>
     <!-- 引入vue -->
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <!-- 引入lodash -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.15/lodash.js"></script>
 </head>
 <body>
     <div id="app">
         {{arr}}
         {{msg}}
+        <button v-on:click="add">新增</button>
+        {{obj}}
     </div>
     <script>
         let vm = new Vue({
@@ -18,21 +22,54 @@
             data(){
                 return {
                     arr:[1,2,3,4],
-                    msg:'hello'
+                    msg:'hello',
+                    obj:{
+                        name:'zwj',
+                        age:21
+                    }
+                }
+            },
+            methods:{
+                add(){
+                    // 通过this直接访问到data的数据
+                    // this.obj.gender = 'male';
+
+                    // 使用this.$set()方法
+                    // this.$set(this.obj,'gender','male');
+
+                    let address = {
+                        province:'福建省',
+                        city:'龙岩市'
+                    }
+
+                    // 添加多个属性时可以使用Object.assign();
+                    // this.obj = Object.assign({},this.obj,address);
+
+                    // 如下方式不会引起页面的更新(没有改变引用地址)
+                    Object.assign(this.obj,address);
+                    // 解决方法
+                    // 1.强制Vue实例重新渲染[不推荐使用该方式]
+                    // this.$forceUpdate();
+
+                    // 2.使用第三方库lodash的clone方法
+                    this.obj = _.clone(this.obj);
+                    console.log(this.obj);
                 }
             }
         })
 
-        setInterval(() => {
-            // 生成随机数
-            let random = Math.floor(Math.random()*10);
-            // 追加到msg后面
-            // vm.msg += random;
-            // console.log(vm.msg);
-            //vm.arr.push(random);
-            // vm.arr[vm.arr.length] = random;
-            // console.log(vm.arr);
-        }, 2000);
+        // setInterval(() => {
+        //     // 生成随机数
+        //     let random = Math.floor(Math.random()*10);
+        //     // 追加到msg后面
+        //     // vm.msg += random;
+        //     // console.log(vm.msg);
+        //     // vm.arr[vm.arr.length] = random;
+
+        //     // vm.arr = [...vm.arr,random];
+        //     vm.arr.push(random);
+        //     console.log(vm.arr);
+        // }, 2000);
     </script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监听器</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<body>
+    <div id="app">
+        username: <input type="text" v-model='form.username'>
+        password: <input type="text" v-model='form.password'>
+        email: <input type="text" v-model='form.email'>
+        {{form}}-----{{newForm}}
+
+        <!-- 只对对象中某几个属性进行监听，其他属性改变时，不进行监听 -->
+        <!-- 在此处，只监听username和password，而email发生改变时，不监听 -->
+
+        <!-- 需要使用计算属性将需要监听的属性单独的抽离出来，不希望监听的属性，需要在对象中进行初始化 -->
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            // 计算属性
+            computed:{
+                newForm(){
+                    const {username,password} = this.form;
+                    return {username,password};
+                }
+            },
+            // 监听器
+            watch:{
+                newForm:function(now){
+                    console.log(now);
+                }
+            },
+            data(){
+                return {
+                    form:{
+                        // 对不希望监听的属性进行初始化
+                        email:''
+                    }
+                }
+            },
+            mounted(){
+
+            },
+            methods:{
+
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按键修饰符</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" placeholder="请输入关键字" @keyup.enter="search">
+        <button>搜索</button>
+    </div>
+
+
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+
+                }
+            },
+            methods:{
+                search(){
+                    alert('搜索');
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

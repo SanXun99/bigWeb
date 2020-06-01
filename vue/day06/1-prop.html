@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件的传参</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <!-- 组件的调用 -->
+        <zwj-alert title='hello zwj' visible='false'></zwj-alert>
+        -----
+        <zwj-alert title='hello zwj' :visible='false'></zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>
+                    hello vue
+                    <div v-if='visible'>{{title}}</div>
+                    {{typeofVisible}}
+                </div>
+            `,
+            props:['title','visible'],
+            computed:{
+                // 计算visible的数据类型
+                typeofVisible(){
+                    return typeof this.visible;
+                }
+            }
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+                    
+                }
+            },
+            methods:{
+
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弹框————案例</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <button @click='showAlert'>显示警告框</button>
+        {{ifVisible}}
+        <!-- 组件的调用 -->
+        <zwj-alert title="警告" :visible='ifVisible' @close='closeAlert'></zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div :style='style' v-if='visible'>
+                    {{title}}
+                    <span @click='closeHandler' style='position:absolute;top:10%;right:1%'>x</span>
+                </div>
+            `,
+            props:['title','visible'],
+            methods:{
+                closeHandler(){
+                    this.$emit('close');
+                }
+            },
+            data(){
+                return {
+                    style:{
+                        'background-color':'#ccc',
+                        color:'red',
+                        'border-radius':'4px',
+                        padding:'1em',
+                        position:'relative'
+                    }
+                }
+            }
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+                    ifVisible:false
+                }
+            },
+            methods:{
+                // 显示警告框
+                showAlert(){
+                    this.ifVisible = true;
+                },
+                closeAlert(){
+                    this.ifVisible = false;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

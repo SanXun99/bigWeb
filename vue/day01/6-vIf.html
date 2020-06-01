@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="token">
+            你好:{{username}}
+            <a href="">退出登录</a>
+            
+        </div>
+
+        <div v-else>
+            <a href="" v-on:click.prevent="login">登录</a>
+            <a href="">没有账号? 请注册</a>
+        </div>
+
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    token:false,
+                    username:"zwj"
+                }
+            },
+            methods:{
+                login(){
+                    this.token = true;
+
+                    // 尽可能少的设计dom操作
+                    // event.preventDefault();
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

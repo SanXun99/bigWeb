@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单向数据流————案例</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <div>总数:{{total}}</div>
+        <!-- 组件的调用 -->
+        <zwj-alert @reduce='reduceHandlerFather' @add='addHandlerFather'></zwj-alert>
+        <zwj-alert @reduce='reduceHandlerFather' @add='addHandlerFather'></zwj-alert>
+        <zwj-alert @reduce='reduceHandlerFather' @add='addHandlerFather'></zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>
+                    <div>当前数:{{count}}</div>
+                    <div>
+                        <button @click='reduceHandler'>减少</button>
+                        <button @click='addHandler'>增加</button>
+                    </div>
+                </div>
+            `,
+            methods:{
+                // 减少
+                reduceHandler(){
+                    // 事件发射，用于通知父组件并触发父组件中绑定的自定义事件进行变量的修改
+                    this.$emit('reduce');
+                    this.count--;
+                },
+                // 增加
+                addHandler(){
+                    this.$emit('add');
+                    this.count++;
+                }
+            },
+            data(){
+                let random = Math.random();
+                console.log(random);
+                return {
+                    count:0
+                }
+            }
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+                    total:0
+                }
+            },
+            methods:{
+                reduceHandlerFather(){
+                    this.total--;
+                },
+                addHandlerFather(){
+                    this.total++;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

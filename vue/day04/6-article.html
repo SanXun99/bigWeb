@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录流程</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <!-- 引入css文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="token">
+            你好：{{username}}
+            <a href="" v-on:click.prevent='layout'>退出登录</a>
+            <!-- 级联模糊查询 -->
+            <form>
+                所属栏目: 
+                <select name="" id="" v-model="params.categoryId">
+                    <option value="">所有栏目</option>
+                    <option :value="item.id" v-for="item in categories" :key="item.id">{{item.name}}</option>
+                </select>
+                关键字: <input type="text" placeholder="请输入关键字" v-model="params.keywords">
+            </form>
+            <!-- 新增模态框 -->
+            <!-- {{article_form}} -->
+            <form @submit.prevent='submitHandler'>
+                文章标题: <input type="text" v-model="article_form.title">
+                所属栏目: 
+                    <select name="" id="" v-model="article_form.categoryId">
+                        <option :value="item.id" v-for="item in categories" :key="item.id">{{item.name}}</option>
+                    </select>
+                正文: 
+                    <textarea v-model="article_form.content" name="" id="" cols="30" rows="10"></textarea>
+                    <input type="submit" value="提交">
+            </form>
+
+            <!-- 表格数据 -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>文章标题</th>
+                        <th>所属栏目</th>
+                        <th>文章内容</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for='item in articles.list' :key="item.id">
+                        <td>{{item.id}}</td>
+                        <td>{{item.title}}</td>
+                        <td v-if="item.category">{{item.category.name}}</td>
+                        <td v-else>暂无</td>
+                        <td style="width: 500px;">{{item.content}}</td>
+                        <td>
+                            <a href="" @click.prevent='toEdit(item)'>修改</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            总数: {{articles.total}}
+            当前页: {{articles.page+1}}
+            当前页的数量: {{articles.pageSize}}
+            <button @click='prePage(articles.page-1)' class="btn btn-primary">上一页</button>
+            <button @click='nextPage(articles.page+1)' class="btn btn-primary">下一页</button>
+        </div>
+
+        <div v-else>
+            <a href="" v-on:click.prevent="toLogin">登录</a>
+            <a href="">没有账号？请注册</a>
+            
+            <!-- 模态框 -->
+            {{loginForm}}
+            <form :style="style" @submit.prevent="login">
+                用户名：<input type="text" v-model="loginForm.username" placeholder="请输入用户名">
+                密码：<input type="password" v-model="loginForm.password" placeholder="请输入密码">
+                <input type="submit" value="确认登录">
+            </form>
+        </div>
+        
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    // 监听查询时的文章参数
+                    params:{
+                        page:0,
+                        pageSize:10,
+                        categoryId:'',
+                        keywords:''
+                    },
+                    // 新增文章的信息
+                    article_form:{},
+                    // 登录时输入的信息
+                    loginForm:{},
+                    token: localStorage.getItem('token'),
+                    username: '阿黄',
+                    // 控制模态框的初始状态 -->  隐藏
+                    style:{
+                        display: 'none'
+                    },
+                    // 所有文章
+                    articles:[],
+                    // 所有栏目
+                    categories:[]
+                }
+            },
+            watch:{
+                params:{
+                    handler:function(now){
+                        this.loadArticle();
+                    },
+                    deep:true
+                }
+            },
+            // 页面加载的时候
+            created() {
+                let token = localStorage.getItem('token');
+                if (token) {
+                    // 查询用户信息
+                    this.findMsg(token);
+                    // 查询所有文章
+                    this.loadArticle();
+                    // 查询所有栏目
+                    this.loadCategory();
+                }
+            },
+            methods: {
+                // 上一页
+                prePage(page){
+                    if(this.params.page > 0){
+                        this.params.page = page;
+                    }
+                },
+                // 下一页
+                nextPage(page){
+                    let pa = this.articles.total / this.articles.pageSize
+                    if(this.params.page < parseInt(pa)){
+                        this.params.page = page;
+                    }
+                },
+                // 修改文章
+                toEdit(item){
+                    // 将当前行数据放到表单内
+                    this.article_form = item;
+                    this.article_form.categoryId = item.category.id;
+                },
+                // 发布文章
+                submitHandler(){
+                    $.ajax({
+                        url: 'http://47.106.211.48:8099/manager/article/saveOrUpdateArticle',
+                        method: 'post',
+                        data: this.article_form,
+                        success: (res) => {
+                            // 刷新数据
+                            this.loadArticle();
+                            // 清空表单
+                            this.article_form = {};
+                        }
+                    })
+                },
+                // 加载所有栏目
+                loadCategory(){
+                    $.ajax({
+                        url: 'http://47.106.211.48:8099/manager/category/findAllCategory',
+                        method: 'get',
+                        data: {},
+                        success: (res) => {
+                            this.categories = res.data;
+                        }
+                    })
+                },
+                // 加载所有文章
+                loadArticle(){
+                    $.ajax({
+                        url: 'http://47.106.211.48:8099/manager/article/findArticle',
+                        method: 'get',
+                        // 监听查询参数params
+                        data: this.params,
+                        success: (res) => {
+                            this.articles = res.data;
+                        }
+                    })
+                },
+                // 显示模态框
+                toLogin(){
+                    this.style.display = 'block';
+                },
+                // 登录
+                login() {
+                    $.ajax({
+                        url: 'http:/47.106.211.48:8099/manager/user/login',
+                        method: 'post',
+                        data: JSON.stringify(this.loginForm),
+                        contentType: 'application/json',
+                        success: (res) => {
+                            // 将token设置到浏览器
+                            localStorage.setItem('token', res.data.token)
+                            // 将token赋值给data中的token
+                            this.token = res.data.token
+                            // 调用根据token获取用户信息的方法
+                            this.findMsg(res.data.token);
+                            // 查询文章
+                            this.loadArticle();
+                            // 查询所有栏目
+                            this.loadCategory();
+                        }
+                    })
+                },
+                // 根据token查询用户信息
+                findMsg(token) {
+                    $.ajax({
+                        url: 'http://47.106.211.48:8099/manager/user/info',
+                        method: 'get',
+                        data: { token },
+                        success: (res) => {
+                            this.username = res.data.username;
+                        }
+                    })
+                },
+                // 退出登录
+                layout() {
+                    $.ajax({
+                        url: 'http://47.106.211.48:8099/manager/user/logout',
+                        method: 'post',
+                        data: {},
+                        success: (res) => {
+                            // 清空浏览器的token
+                            localStorage.clear();
+
+                            // 刷新浏览器
+                            location.reload();
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

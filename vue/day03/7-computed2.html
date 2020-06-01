@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性的应用</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.26.0/moment.js"></script>
+    <!-- 引入css文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- 表格数据 -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>作者姓名</th>
+                    <th>作者昵称</th>
+                    <th>注册时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for='item in newUsers' :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.username}}</td>
+                    <td>{{item.nickname}}</td>
+                    <td style="width: 500px;">{{item.regtime}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    users:[]
+                }
+            },
+            created(){
+                this.findUser();
+            },
+            // 计算属性
+            computed:{
+                newUsers() {
+                    this.users.forEach((item) => {
+                        let result = moment(item.regtime).format('YYYY-MM-DD hh:mm:ss');
+                        item.regtime = result;
+                    });
+                    return this.users;
+                }
+            },
+            methods:{
+                findUser() {
+                    $.ajax({
+                        url: 'http://47.106.211.48:8099/manager/user/findAllUser',
+                        method: 'get',
+                        data: {},
+                        success: (res) => {
+                            this.users = res.data;
+                        }
+                    })
+                },
+            },
+            
+        })
+    </script>
+</body>
+</html>

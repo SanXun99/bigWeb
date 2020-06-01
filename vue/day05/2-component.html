@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件注册</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <zwj-alert></zwj-alert>
+        <zwj-alert></zwj-alert>
+        <zwj-alert></zwj-alert>
+        <zwj-button></zwj-button>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>hello vue</div>
+            `
+        })
+        new Vue({
+            el:'#app',
+            // 局部注册组件
+            components:{
+                'zwj-button':{
+                    template:`
+                        <button @mouseleave='leaveHandler($event)' @mouseover='hoverHandler($event)' :style="style">按钮</button>
+                        `,
+                    methods:{
+                        // 鼠标移入
+                        hoverHandler(event){
+                            event.target.style.background = 'rgb(102,177,255)'
+                        },
+                        // 鼠标移除
+                        leaveHandler(event){
+                            event.target.style.background = 'rgb(64,158,255)'
+                        }
+                    },
+                    data(){
+                        return {
+                            style:{
+                                color:'#fff',
+                                'background-color':'rgb(64,158,255)',
+                                'font-size':'16px',
+                                padding:'0.5em 1.5em',
+                                border:0,
+                                'border-radious':'4px',
+                                cursor:'pointer'
+                                
+                            }
+                        }
+                    },
+                },
+            },
+            
+            methods:{
+
+            },
+        })
+    </script>
+</body>
+</html>

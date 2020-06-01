@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>msg原值: {{msg}}</div>
+        <div>msg反转值-直接操作: {{msg.split('').reverse().join('')}}</div>
+        <div>msg反转值-计算属性: {{reverseMsg}}</div>
+        <div>msg反转值-方法: {{reverseHandler(msg)}}</div>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    msg:'hello vue',
+                }
+            },
+            // 在methods中，也可以定义一个方法，但是在使用的时候需要加()调用
+            methods:{
+                reverseHandler(){
+                    console.log('reverseHandler',this.msg);
+                    return this.msg.split('').reverse().join('');
+                }
+            },
+            // 计算属性(涉及到复杂的属性操作时，推荐使用computed)
+            // 在多次使用data中的数据时，计算属性只会执行一次，但方法调用多少次就执行多少次
+            // 计算属性 --> 效率高
+            // 方法 --> 效率低
+            computed:{
+                // reverseMsg:function(){
+                //     return this.msg.split('').reverse().join('')
+                // },
+                //等价于
+                reverseMsg(){
+                    console.log('reverseMsg',this.msg);
+                    return this.msg.split('').reverse().join('');
+                }
+            }
+        })
+        // setInterval(() => {
+        //     let random = Math.floor(Math.random()*10);
+        //     vm.msg += random;
+        // }, 1000);
+    </script>
+</body>
+</html>

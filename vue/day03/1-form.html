@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{form}}
+        <form @submit.prevent="saveArticle">
+            <!-- 使用lazy后，当切换到下一个输入框时，才会加载 -->
+            文章标题<input v-model.lazy="form.title" type="text" placeholder="请输入文章标题"><br>
+            所属栏目
+                <select v-model="form.categoryId">
+                    <option :value="item.id" :key="item.id" v-for="item in categories">{{item.name}}</option>
+                </select><br>
+            文章标签
+                <label for="typeOne">
+                    <input v-model="form.options" value="css" type="checkbox" id="typeOne">css
+                </label>
+                <label for="typeTwo">
+                    <input v-model="form.options" value="html" type="checkbox" id="typeTwo">html
+                </label>
+                <label for="typeThree">
+                    <input v-model="form.options" value="vue" type="checkbox" id="typeThree">vue
+                </label><br>
+            文章样式
+                <label for="listOne">
+                    <!-- 使用number转换为数字类型 -->
+                    <input v-model.number="form.liststyle" type="radio" id="listOne" name="liststyle" value="1">样式一
+                </label>
+                <label for="listTwo">
+                    <input v-model="form.liststyle" type="radio" id="listTwo" name="liststyle" value="2">样式二
+                </label><br>
+            正文
+                <textarea v-model="form.content" name="" id="" cols="30" rows="10"></textarea>
+                <input type="submit" value="提交">
+        </form>
+    </div>
+
+
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    form:{
+                        options:[]
+                    },
+                    categories:[{
+                        id:1,
+                        name:'头条'
+                    },{
+                        id:2,
+                        name:'娱乐'
+                    },{
+                        id:3,
+                        name:'体育'
+                    }]
+                }
+            },
+            methods:{
+                findAllCategory(){
+
+                },
+                saveArticle(){
+                    alert(JSON.stringify(this.form));
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

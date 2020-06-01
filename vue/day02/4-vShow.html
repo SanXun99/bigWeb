@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-show切换搜索内容</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <!-- 引入jQuery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+</head>
+<style>
+    .search div{
+        float: left;
+    }
+    img {
+        height: 25px;
+    }
+    .items{
+        margin-left: 25px;
+    }
+</style>
+<body>
+    <div id="app">
+        <div class="search">
+            <div>分类</div>
+            <img v-on:click="toggle" v-bind:src="imgUrl" alt="">
+        </div>
+        <div class="items" v-show="ifShow" v-for="item in list" v-bind:key="item.id">
+            <div>{{item.name}}</div>
+        </div>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    ifShow:false,
+                    imgUrl:'./1.png',
+                    list:[{
+                        id:1,
+                        name:'历史'
+                    },{
+                        id:2,
+                        name:'爱情'
+                    },{
+                        id:3,
+                        name:'科技'
+                    }]
+                }
+            },
+            methods:{
+                toggle(){
+                    if(this.imgUrl == './1.png'){
+                        this.imgUrl = './2.png';
+                        this.ifShow = true;
+                    } else {
+                        this.imgUrl = './1.png'
+                        this.ifShow = false;
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

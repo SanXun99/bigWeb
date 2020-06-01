@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监听器</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<body>
+    <div id="app">
+        msg: <input type="text" v-model='msg'>
+        username: <input type="text" v-model='form.username'>
+        password: <input type="text" v-model='form.password'>
+        email: <input type="text" v-model='form.email'>
+        {{msg}}-------{{form}}
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            // 监听器
+            watch:{
+                // 深度监听
+                form:{
+                    handler:function(now,old){
+                        console.log('now',now);
+                        console.log('old',old);
+                    },
+                    deep:true
+                },
+                // 对于整个form对象的监听
+                // form:function(now,old){
+                //     console.log('now',now);
+                //     console.log('old',old);
+                // },
+                // 对于对象单个属性的监听
+                // 'form.username':function(now,old){
+                //     console.log('now',now);
+                //     console.log('old',old);
+                // },
+                // 'form.password':function(now,old){
+                //     console.log('now',now);
+                //     console.log('old',old);
+                // },
+                // 对于msg的监听
+                msg:function(now,old){
+                    console.log('now',now);
+                    console.log('old',old);
+                }
+            },
+            data(){
+                return {
+                    msg:"",
+                    form:{
+                        username:'',
+                        password:''
+                    }
+                }
+            },
+            mounted(){
+
+            },
+            methods:{
+
+            },
+        })
+    </script>
+</body>
+</html>

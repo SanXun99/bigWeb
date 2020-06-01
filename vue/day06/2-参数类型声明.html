@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件参数的数据类型</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <!-- 组件的调用 -->
+        <!-- <zwj-alert title='hello zwj' visible='false'></zwj-alert>   -->
+        <zwj-alert title='hello zwj' :visible='false'></zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>
+                    hello vue   {{title}}
+                    <div v-if='visible'>{{title}}</div>
+                </div>
+            `,
+            props:{
+                // 期望接收的title是一个字符串
+                title:{
+                    String,
+                    required:true   // 参数不可被省略
+                },
+                // 期望接收的title是一个布尔类型
+                visible:Boolean
+            }
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+                    
+                }
+            },
+            methods:{
+
+            },
+        })
+    </script>
+</body>
+</html>

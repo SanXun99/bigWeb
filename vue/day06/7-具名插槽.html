@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>具名插槽</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <!-- 组件的调用 -->
+        <zwj-alert title="警告">
+            <!-- <h1 slot="footer">你好</h1>
+            <h3 slot="header">hello vue</h3> -->
+            <template v-slot:header>
+                <h1>你好</h1>
+                <a href="">删除</a>
+            </template>
+            <template  v-slot:footer>
+                <h3>hello vue</h3>
+            </template>
+            <template>
+                <h5>hello zwj</h5>
+            </template>
+        </zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>
+                    <slot name='header'></slot>
+                    {{title}}
+                    <slot></slot>
+                    <slot name='footer'></slot>
+                </div>
+            `,
+            props:['title'],
+            methods:{
+                closeHandler(){
+
+                }
+            },
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+
+                }
+            }
+        })
+    </script>
+</body>
+</html>

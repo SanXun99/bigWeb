@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单向数据流</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.26.0/moment.js"></script>
+<body>
+    <div id="app">
+        <!-- 组件的调用 -->
+        <zwj-alert :date='dateNow'></zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>
+                    <div>原值：{{date}}----改变后的值：{{newDate}}</div>
+                </div>
+            `,
+            computed:{
+                newDate(){
+                    return moment(this.date).format('YYYY-MM-DD');
+                }
+            },
+            props:{
+                date:Date
+            }
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+                    dateNow:new Date()
+                }
+            },
+        })
+    </script>
+</body>
+</html>

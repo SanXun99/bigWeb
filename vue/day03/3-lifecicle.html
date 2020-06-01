@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue的生命周期</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        num:{{num}}
+    </div>
+
+
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            // 生命周期函数
+            beforeCreate(){
+                // 无法访问vue实例中的data及methods中的方法
+                console.log('beforeCreate',this.num); // undefined
+                alert('beforeCreate');
+            },
+            //***
+            created(){
+                // vue实例完全创建好了，可以访问到vue实例中的data及methods中的方法
+                // 常用于在页面加载完毕之后，立即查询某些数据(文章列表)
+                console.log('created',this.num);
+                alert('creted');
+            },
+            beforeMount(){
+                // 完成了模板的编译(将html转换为dom，vue为我们做)
+                console.log('beforeMount',this.num);
+                alert('beforeMount');
+            },
+            //***
+            mounted(){
+                // 完成了数据绑定，页面首次渲染出data中的数据
+                // mouthed其实是vue实例创建的最后一个生命周期函数
+                // 常用于改变dom的样式(滚动条的样式，监听页面的滚动)
+                console.log('mounted',this.num);
+                alert('mounted');
+            },
+            beforeUpdate(){
+                // data中的数据被更改，渲染到页面之前
+                console.log('beforeUpdate',this.num);
+                alert('beforeUpdate');
+            },
+            updated(){
+                // data中的数据被更改，并被重新渲染到页面上
+                console.log('updated',this.num);
+                alert('updated');
+            },
+            // beforeDestory(){},
+            // destoryed(){},
+
+            // 计算属性
+            // computed:{},
+            // 监听
+            // watch:{},
+            // 自定义指令
+            // directives:{},
+            // 过滤器
+            // filters:{},
+
+            // 数据
+            data(){
+                return {
+                    num:1
+                }
+            },
+            // 方法
+            methods:{
+
+            }
+        })
+        // setInterval(() => {
+        //     vm.num++;
+        // }, 2000);
+    </script>
+</body>
+</html>

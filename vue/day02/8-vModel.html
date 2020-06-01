@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双向数据绑定</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <form @submit.prevent="submitHander">
+            文章标题<input type="text" v-model="form.title"><br>
+            <!-- 单选按钮 -->
+            <!-- 在给单选按钮绑定值的时候，需要添加value属性 -->
+            文章样式
+                <label for="listOne">
+                    <input type="radio" id="listOne" name="liststyle" value="1" v-model="form.liststyle">样式一
+                </label>
+                <label for="listTwo">
+                    <input type="radio" id="listTwo" name="liststyle" value="2" v-model="form.liststyle">样式二
+                </label>
+                <br>
+            所属栏目
+                <select name="" id="" v-model="form.categoryId">
+                    <option value="1">新闻</option>
+                    <option value="2">娱乐</option>
+                    <option value="3">体育</option>
+                </select><br>
+            正文
+                <textarea name="" id="" cols="30" rows="10" v-model="form.content"></textarea>
+                <input type="submit" value="提交">
+                {{form}}
+        </form>
+    </div>
+
+
+    <script>
+        // let title = $('input [name=title]').val();
+        // let data = {
+        //     title
+        // }
+        // $.ajax({})
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    form:{
+                        // 如果需要默认选择第一个，给定一个初始值即可
+                        title:'初始标题',
+                        categoryId:1
+                    }
+                }
+            },
+            methods:{
+                submitHander(){
+                    alert(JSON.stringify(this.form));
+                    $.ajax({
+                        url:"",
+                        method:'',
+                        data:this.form,
+                    })
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

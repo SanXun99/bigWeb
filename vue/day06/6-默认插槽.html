@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>默认插槽</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <!-- 组件的调用 -->
+        <zwj-alert title="警告">
+            <h1>你好</h1>
+        </zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>
+                    <slot></slot>
+                    {{title}}
+                </div>
+            `,
+            props:['title'],
+            methods:{
+                closeHandler(){
+
+                }
+            },
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+
+                }
+            }
+        })
+    </script>
+</body>
+</html>

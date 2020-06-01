@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tag案例</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <!-- 引入jQuery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul v-for="(item,index) in list" v-bind:key="item.id">
+            <li>
+                <span v-if="index == 0" style="background-color: red;">No.1</span>
+                <span v-else-if="index == 1" style="background-color: teal;">No.2</span>
+                <span v-else-if="index == 2" style="background-color: turquoise;">No.3</span>
+                <span v-else style="background-color: darkgray">No.{{index + 1}}</span>
+                <span>{{item.name}}</span>
+            </li>
+        </ul>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    list:[{
+                        id:1,
+                        name:'无声告白'
+                    },{
+                        id:2,
+                        name:'白夜行'
+                    },{
+                        id:3,
+                        name:'百年孤独'
+                    },{
+                        id:4,
+                        name:'雨季不再来'
+                    },{
+                        id:5,
+                        name:'边城'
+                    }]
+                }
+            },
+            methods:{
+                
+            }
+        })
+
+    </script>
+</body>
+</html>

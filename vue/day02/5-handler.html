@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件绑定</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-on:click="clickHandler('hello vue')">hello</div>
+        <div v-on:click="num += 1">{{num}}</div>
+        <div v-on:click="alert('hello vue')">123</div>
+        <div @click="alert('hello vue')">456</div>
+        <div v-for="n in 5" v-bind:key="n" v-on:click="alertHandler(n)">
+            {{n}}
+        </div>
+        <a href="" @click.prevent="login($event)">登录</a>
+    </div>
+
+
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    num:1,
+                }
+            },
+            methods:{
+                clickHandler(val) {
+                    alert(val)
+                },
+                alertHandler(item){
+                    alert(item);
+                },
+                login(event){
+                    console.log(event);
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

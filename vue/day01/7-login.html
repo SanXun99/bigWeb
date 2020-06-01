@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <!-- 引入axios -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <div v-if="token">
+            你好:{{username}}
+            <a href="" v-on:click.prevent="logout">退出登录</a>
+            
+        </div>
+
+        <div v-else>
+            <a href="" v-on:click.prevent="login">登录</a>
+            <a href="">没有账号? 请注册</a>
+        </div>
+
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data(){
+                return {
+                    token:localStorage.getItem('token'),
+                    username:localStorage.getItem('username')
+                }
+            },
+            created(){
+                console.log(this.token,'---');
+            },
+            methods:{
+                login(){
+                   let obj = {
+                       username:'zwj',
+                       password:123321
+                   }
+                   // 登录
+                   axios.post('http://47.106.211.48:8099/manager/user/login',obj)
+                   .then((res)=>{
+                       // console.log(res.data.data.token);
+                       localStorage.setItem('token',res.data.data.token);
+                       this.token = res.data.data.token;
+                       // 根据token获取用户信息
+                       axios.get('http://47.106.211.48:8099/manager/user/info?token='+this.token)
+                       .then((res)=>{
+                            // console.log(res.data.data.username);
+                            // 获得用户名并将其设置到本地存储中
+                            this.username = res.data.data.username;
+                            localStorage.setItem('username',res.data.data.username);
+                        })
+                   })
+
+                    // 尽可能少的设计dom操作
+                    // event.preventDefault();
+                },
+
+                logout(){
+                    localStorage.clear();
+                    // 获得的token数据还存在并没有被置空
+                    // console.log(this.token);
+                    // 将获得的token置空
+                    this.token = localStorage.getItem('token');
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件注册</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<body>
+    <div id="app">
+        <zwj-alert title="hello vue"></zwj-alert>
+        <zwj-alert title="hello vue" zwj='钟武杰'></zwj-alert>
+    </div>
+    <script>
+        // 全局注册组件
+        Vue.component('zwj-alert',{
+            template:`
+                <div>{{title}}---{{zwj}}</div>
+            `,
+            props:['title','zwj']
+        })
+        new Vue({
+            el:'#app',
+            data(){
+                return {
+
+                }
+            }
+        })
+    </script>
+</body>

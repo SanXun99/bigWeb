@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>element-ui的使用</title>
+    <!-- 引入vue -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <!-- 引入jQuery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入moment时间处理 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.26.0/moment.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- 引入cms的css文件 -->
+    <link rel="stylesheet" href="./5-cms.css">
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="token">
+            你好：{{username}}
+            <a href="" v-on:click.prevent='layout'>退出登录</a>
+            <el-tabs v-model="activeName">
+                <el-tab-pane label="文章管理" name="first">
+                    <!-- 发布文章 -->
+                    <el-button plain @click="showArticleVisible">发布</el-button>
+                    <!-- 发布文章模态框 -->
+                    <el-dialog title="发布文章" :visible.sync="articles_visible">
+                        <el-form :model="article_form">
+                            <el-form-item label="文章标题" :label-width="formLabelWidth">
+                                <el-input v-model="article_form.title" autocomplete="off"></el-input>
+                            </el-form-item>
+                        <el-form-item label="列表样式" :label-width="formLabelWidth">
+                            <el-radio-group v-model="article_form.liststyle">
+                                <el-radio label="样式一"></el-radio>
+                                <el-radio label="样式二"></el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="文章封面" :label-width="formLabelWidth">
+                                <!-- 图片上传 -->
+                                <el-upload
+                                    action="http://134.175.100.63:5588/file/upload"
+                                    list-type="picture-card"
+                                    :on-preview="handlePictureCardPreview"
+                                    :on-success='successHandler'>
+                                    <i class="el-icon-plus"></i>
+                                </el-upload>
+                            <el-dialog :visible.sync="dialogVisible">
+                                <img width="100%" :src="dialogImageUrl" alt="">
+                            </el-dialog>
+                        </el-form-item>
+                        <el-form-item label="所属栏目" :label-width="formLabelWidth">
+                            <el-select v-model="article_form.categoryId" placeholder="请选择栏目">
+                                <el-option :value="item.id"  v-for="item in categories" :key="item.id">{{item.name}}</el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="正文" :label-width="formLabelWidth">
+                            <el-input type="textarea" v-model="article_form.content"></el-input>
+                        </el-form-item>
+                        </el-form>
+                        <div slot="footer" class="dialog-footer">
+                          <el-button @click="articles_visible = false">取 消</el-button>
+                          <el-button type="primary" @click="submitArticle">确 定</el-button>
+                        </div>
+                    </el-dialog>
+                    <!-- 根据日期关键字级联查询 -->
+                     <!-- 日期选择器 -->
+                     <div class="block">
+                        <el-date-picker
+                            v-model="params.beginTime"
+                            type="date"
+                            placeholder="选择日期"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd">
+                        </el-date-picker>
+                        <el-date-picker
+                            v-model="params.endTime"
+                            type="date"
+                            placeholder="选择日期"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd">
+                        </el-date-picker>
+                        <!-- 栏目选择 -->
+                        <el-select v-model="params.categoryId" placeholder="请选择栏目">
+                            <el-option value=''>所有栏目</el-option>
+                            <el-option :value="item.id"  v-for="item in categories" :key="item.id">{{item.name}}</el-option>
+                        </el-select>
+                        <!-- 关键字搜索 -->
+                        <el-input
+                            style="width:220px;"
+                            placeholder="请输入关键字"
+                            v-model="params.keywords"
+                            clearable>
+                        </el-input>
+                    </div>
+                    <!-- 发布文章模态框 -->
+                    <!-- 文章数据 -->
+                    <el-table
+                        :data="articles.list"
+                        stripe
+                        @cell-click='showBigPicture'
+                        style="width: 100%">
+                        <el-table-column
+                        prop="title"
+                        label="文章标题"
+                        width="180">
+                        </el-table-column>
+                        <el-table-column
+                        prop="content"
+                        label="文章内容"
+                        width="380">
+                        </el-table-column>
+                        <el-table-column
+                        prop="publishtime"
+                        :formatter='dateFormat'
+                        label="发布时间"
+                        width="180">
+                        </el-table-column>
+                        <el-table-column
+                        prop="source"
+                        label="文章封面">
+                        <!-- 插槽 -->
+                        <template slot-scope="scope">
+                            <img style="height: 100px;" :src="scope.row.source" alt="">
+                        </template>
+                        </el-table-column>
+                        <el-table-column
+                        prop="status"
+                        label="文章状态">
+                        <!-- 插槽 -->
+                        <template slot-scope="scope">
+                            <el-switch
+                                v-model="scope.row.status"
+                                :active-value='1'
+                                :inactive-value='0'
+                                @change='checkArticle(scope.row)'>
+                            </el-switch>
+                        </template>
+                        </el-table-column>
+                        <!-- 修改和删除 -->
+                        <el-table-column
+                            label="操作"> 
+                            <template slot-scope="scope">
+                                <span style="font-size: 25px;">
+                                    <i class="el-icon-edit-outline" @click="updateArticle(scope.row)"></i>
+                                </span>
+                                <span style="font-size: 25px;">
+                                    <i class="el-icon-delete" @click="deleteArticle(scope.row)"></i>
+                                </span>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+
+                    <!-- 分页 -->
+                    <el-pagination
+                        background
+                        layout="prev, pager, next"
+                        :current-page='articles.page+1'
+                        :page-size='articles.pageSize'
+                        :total="articles.total"
+                        @current-change='changePage'>
+                    </el-pagination>
+
+                    <!-- 查看大图模态框 -->
+                    <el-dialog
+                        title="大图显示"
+                        :visible.sync="picture_visible">
+                        <img width="100%" :src="imgUrl" alt="">
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="picture_visible = false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+                </el-tab-pane>
+
+
+
+
+                <el-tab-pane label="栏目管理" name="second">栏目管理</el-tab-pane>
+                <el-tab-pane label="用户管理" name="third">用户管理</el-tab-pane>
+                <el-tab-pane label="评论管理" name="fourth">评论管理</el-tab-pane>
+            </el-tabs>
+
+        </div>
+
+        <div v-else class="loginPage">
+            <h3>{{title}}</h3>
+            {{login_form}}
+            <el-form :model="login_form" label-width="80px">
+                <el-form-item label="姓名">
+                  <el-input v-model="login_form.username"></el-input>
+                </el-form-item>
+                <el-form-item label="密码">
+                    <el-input type='password' v-model="login_form.password"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="loginHandler">登录</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+    <script src="./5-cms.js"></script>
+</body>
+
+</html>
